@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Array of students
+const students = [
+    { name: "Rahul", marks: 85 },
+    { name: "Priya", marks: 32 },
+    { name: "Amit", marks: 67 },
+    { name: "Sneha", marks: 90 },
+    { name: "Kiran", marks: 28 }
+];
+
+// Function to process students
+function processStudents(students) {
+
+    // Using Closure
+    function addGraceMarks(graceMarks) {
+
+        return students.map(function(student) {
+
+            return {
+                name: student.name,
+                marks: Math.min(student.marks + graceMarks, 100)
+            };
+
+        });
+    }
+
+    // Add 5 grace marks
+    const updatedStudents = addGraceMarks(5);
+
+    // Using filter() to select passing students
+    const passingStudents = updatedStudents.filter(function(student) {
+        return student.marks >= 40;
+    });
+
+    // Using reduce() to calculate total marks
+    const totalMarks = passingStudents.reduce(function(total, student) {
+        return total + student.marks;
+    }, 0);
+
+    // Calculate average marks
+    const averageMarks = passingStudents.length > 0
+        ? totalMarks / passingStudents.length
+        : 0;
+
+    // Using forEach() to display passing students
+    console.log("Passing Students:");
+
+    passingStudents.forEach(function(student) {
+        console.log("Name: " + student.name + ", Marks: " + student.marks);
+    });
+
+    // Return final report
+    return {
+        passingStudents: passingStudents,
+        averageMarks: averageMarks
+    };
+}
+
+// Calling the function
+const report = processStudents(students);
+
+// Using IIFE to display final report
+(function() {
+
+    console.log("\n========== FINAL REPORT ==========");
+
+    console.log("Total Passing Students: " + report.passingStudents.length);
+
+    console.log("Average Marks: " + report.averageMarks.toFixed(2));
+
+})();
+    </script>
+</body>
+</html>
